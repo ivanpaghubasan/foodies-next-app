@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { mealInputSchema } from "../schemas/mealsSchema";
 import { saveMeal } from "../services/mealsService";
 import { MealFormState } from "@/types/mealsTypes";
+import { revalidatePath } from "next/cache";
 
 export async function createMeal(initialState: MealFormState, formData: FormData) {
   const raw = {
@@ -24,5 +25,6 @@ export async function createMeal(initialState: MealFormState, formData: FormData
   }
 
   await saveMeal(validatedFields.data);
+  revalidatePath('/meals', 'layout');
   redirect('/meals');
 }

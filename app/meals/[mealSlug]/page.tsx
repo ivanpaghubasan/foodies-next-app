@@ -11,6 +11,20 @@ type PageProps = {
   }>;
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const { mealSlug } = await params;
+  const meal = await getMeal(mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary
+  }
+}
+
 export default async function MealDetailPage({ params }: PageProps) {
   const { mealSlug } = await params;
   const meal = await getMeal(mealSlug);
