@@ -6,13 +6,14 @@ import { notFound } from 'next/navigation';
 
 
 type PageProps = {
-  params: {
+  params: Promise<{
     mealSlug: string;
-  }
+  }>;
 }
 
 export default async function MealDetailPage({ params }: PageProps) {
-  const meal = await getMeal(params.mealSlug);
+  const { mealSlug } = await params;
+  const meal = await getMeal(mealSlug);
 
   if (!meal) {
     notFound();
