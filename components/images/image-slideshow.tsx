@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import burgerImg from '@/assets/burger.jpg';
 import curryImg from '@/assets/curry.jpg';
@@ -12,7 +12,12 @@ import schnitzelImg from '@/assets/schnitzel.jpg';
 import tomatoSaladImg from '@/assets/tomato-salad.jpg';
 import classes from './image-slideshow.module.css';
 
-const images = [
+type Slideshow = {
+  image: StaticImageData;
+  alt: string;
+}
+
+const images: Slideshow[] = [
   { image: burgerImg, alt: 'A delicious, juicy burger' },
   { image: curryImg, alt: 'A delicious, spicy curry' },
   { image: dumplingsImg, alt: 'Steamed dumplings' },
