@@ -11,6 +11,7 @@ export default function MealItem({
   summary,
   creator,
 }: MealSchema) {
+  console.log({image})
   return (
     <article className={classes.meal}>
       <header>
