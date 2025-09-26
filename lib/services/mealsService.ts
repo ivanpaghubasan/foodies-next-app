@@ -1,5 +1,5 @@
 import sql from "better-sqlite3";
-import { MealSchema, mealsListSchema } from "../schemas/mealsSchema";
+import { mealSchema, MealSchema, mealsListSchema } from "../schemas/mealsSchema";
 const db = sql('meals.db');
 
 export async function getMeals():Promise<MealSchema[]> {
@@ -14,6 +14,12 @@ export async function getMeals():Promise<MealSchema[]> {
   return parsed.data;
 }
 
-export async function getMeal(slug: string) {
-  return db.prepare('SELECT * FROM meals WHERE slug = ?').get(slug);
+export async function getMeal(slug: string):Promise<MealSchema> {
+  const result = db.prepare('SELECT * FROM meals WHERE slug = ?').get(slug);
+  const parsed = mealSchema.safeParse(result);
+   if (!parsed.success) {
+    throw new Error("Invalid data from DB: " + JSON.stringify(parsed.error.issues));
+  }
+
+  return parsed.data;
 }
